@@ -1,0 +1,20 @@
+{{ define "main" }}
+<h1>Index Page</h1>
+<p>A library of historical AFP documentation, mirrored from the Apple Developer Documentation Archive.</p>
+<ul>
+  {{ range where .Site.RegularPages "Type" "reference" }}
+    <li>
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    </li>
+  {{ end }}
+  <li>AFP Programming Guide
+    <ul>
+      {{ range where .Site.RegularPages "Type" "programming_guide" }}
+        <li>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </li>
+      {{ end }}
+    </ul>
+  </li>
+</ul>
+{{ end }}

@@ -1,0 +1,7 @@
+baseURL = 'https://afp.fyi/'
+locale = 'en-us'
+title = 'AFP Docs Mirror'
+theme = 'hugo-book'
+
+[params]
+  BookSearch = false
