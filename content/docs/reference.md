@@ -831,6 +831,18 @@ Table 4 lists the result codes for the `FPAddComment` command.
 | `kFPObjectNotFound` | Input parameters do not point to an existing file or directory. |
 | `kFPMiscErr` | Non-AFP error occurred. |
 
+*Community Archive Note.*
+
+The `kFPParamErr` result code below is taken from the AFP 3.0 Reference (January 2001).
+This result code is not documented in the AFP 3.1 Reference or later,
+but its omission appears to be an error.
+
+| Result code | Explanation |
+| --- | --- |
+| `kFPParamErr` | Session reference or Desktop database reference number is unknown; pathname is invalid. |
+
+*End of Community Archive Note.*
+
 **Table 4**  Result codes for the `FPAddComment` command
 
 Figure 4 shows the request block for the `FPAddComment` command.
@@ -2046,7 +2058,19 @@ Table 12 lists the result codes for the `FPCopyFile` command.
 | `kFPObjectExists` | File or directory of the name specified by `NewName` already exists in the destination parent directory. |
 | `kFPObjectNotFound` | The source file does not exist; ancestor directory is unknown. |
 | `kFPObjectTypeErr` | Source parameters point to a directory. |
-| `kFPParamErr` | Open fork reference number is unknown; a combination of the `StartEndFlag` bit and `Offset` parameters specifies a range that starts before byte zero. |
+| `kFPParamErr` | ~~Open fork reference number is unknown; a combination of the `StartEndFlag` bit and `Offset` parameters specifies a range that starts before byte zero.~~ Session reference number, volume identifier, or pathname type is unknown; a pathname or *NewName* is invalid. |
+
+*Community Archive Note.*
+
+The correction of the `kFPParamErr` result code description
+is taken from the AFP 3.0 Reference (January 2001).
+The AFP 3.1 Reference and later is considered erroneous
+because it talks about open fork/byte-range parameters,
+which do not belong to FPCopyFile.
+The request block still clearly starts with SourceVolumeID,
+and the global kFPParamErr definition covers unknown Volume ID.
+
+*End of Community Archive Note.*
 
 **Table 12**  Result codes for the `FPCopyFile` command
 
@@ -2406,6 +2430,15 @@ Table 16 lists the result codes for the `FPDelete` command.
 **Table 16**  Result codes for the `FPDelete` command
 
 Figure 25 shows the request block for the `FPDelete` command.
+
+![Request block for the FPDelete command](/images_reference/afp_048.png)
+
+*Community Archive Note.*
+
+Figure 25 is missing from the AFP 3.4 Reference source document.
+The image shown here is taken from the AFP 3.3 Reference PDF (2009-08-19).
+
+*End of Community Archive Note.*
 
 **Figure 25**  Request block for the `FPDelete` command
 
@@ -7193,8 +7226,16 @@ Table 72 lists the result codes for the `FPSetVolParms` command.
 | `kFPAccessDenied` | User does not have the access privileges required to use this command. |
 | `kFPBitmapErr` | Attempt was made to set a parameter that cannot be set by this command; bitmap is null. |
 | `kFPMiscErr` | Non-AFP error occurred. |
-| `kFPParamErr` | Session reference number is unknown. |
+| `kFPParamErr` | ~~Session reference number is unknown.~~ Session reference number or Volume ID is unknown. |
 | `kFPVolLocked` | Volume is ReadOnly. |
+
+*Community Archive Note.*
+
+The correction for the `kFPParamErr` result code description is taken from the AFP 3.1 Reference (October 16, 2003).
+AFP 3.2 and later claim that only reference number is unknown,
+but it seems more likely that an invalid volume identifier would also cause this error.
+
+*End of Community Archive Note.*
 
 **Table 72**  Result codes for the `FPSetVolParms` command
 
