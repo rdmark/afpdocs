@@ -1,6 +1,6 @@
 baseURL = 'https://afp.fyi/'
 locale = 'en-us'
-title = 'AFP Docs Mirror'
+title = 'AFP Docs Archive'
 theme = 'hugo-book'
 
 [params]
