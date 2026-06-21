@@ -4123,6 +4123,14 @@ int16_t IconIndex
 *CommandCode*  
 `kFPGetIconInfo` (51).
 
+----
+
+*Community Archive Annotation.*
+
+The *CommandCode* for this command is assumed to be **52**. The value of 51 is used by the `FPGetIcon` command, which is described in the previous section.
+
+----
+
 *Pad*  
 Pad byte.
 
@@ -8411,6 +8419,25 @@ enum {
    kFPUUID = 0x10000              // Directories only; AFP version 3.2 and later (with ACL support)
 };
 ```
+
+----
+
+*Community Archive Annotation.*
+
+The enum block above is introduced as "a 16-bit value,"
+and every bit from `kFPAttributeBit` (0x1) through `kFPUnixPrivsBit` (0x8000) fits that constraint.
+However, `kFPUUID = 0x10000` (added in AFP 3.2 for ACL support) is bit 16 —
+one position past the end of a 16-bit field (max 0xFFFF) —
+and cannot be encoded in the same word as the others.
+
+In practice, directory/file UUIDs are retrieved via the `FPGetACL`/`FPSetACL` command pair with its own distinct bitmap.
+Owner/group UUID name resolution similarly goes through `FPMapID` subfunctions.
+
+In conclusion, `kFPUUID` is likely grouped in this enum for documentation convenience
+(it's conceptually "a thing you can get/set on a directory")
+but was never intended to be OR'd into the actual 16-bit `FPGetFileDirParms`/`FPSetFileDirParms` wire bitmap.
+
+----
 
 ##### Constants
 
